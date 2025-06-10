@@ -1,0 +1,108 @@
+=========================
+- CONFIGURAÇÃO DO QUARTUS
+=========================
+
+Quartus
+
+Tools > Options > Mudar duas últimas linhas para o caminho do Modelsim > Colocar o link antigo em Active-HDL (EDA Tool Options) e acrescentar alguma coisa antes
+
+New Project Wizard >> Mudar para VHDL
+
+Criar novo arquivo VHDL
+
+Projeto: PORTA_AND
+"""
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY PORTA_AND IS
+	PORT(
+		E1: IN STD_LOGIC;
+		E2: IN STD_LOGIC;
+		S: OUT STD_LOGIC -- NÃO TEM ;
+	);
+END PORTA_AND;
+
+ARCHITECTURE PORTA_AND_ARCH OF PORTA_AND IS
+BEGIN
+	S <= E1 AND E2;
+END PORTA_AND_ARCH;
+"""
+
+Compilar (Analysis & Synthesis)
+
+Tools > Run Simulation Tools > RTL Simulation > work > PORTA_AND > Botão direito na Entity e Simulate > Seleciona as I/O (SHIFT + MOUSE), botão direito e Add Wave > Run > Botão direito na E1, Force (mudar valor) > Run
+
+"""
+PROCESS(EN, E1, E2)
+BEGIN
+	IF EN = '1' THEN
+		S <= E1 AND E2;
+	END IF;
+END PROCESS;
+"""
+
+"""
+PROCESS(CLK, EN, E1, E2)
+BEGIN
+	IF (CLK'EVENT AND CLK = '1') THEN
+		IF EN = '1' THEN
+			S <= E1 AND E2;
+		END IF;
+	END IF;
+END PROCESS;
+"""
+
+"""
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY PORTA_AND IS
+	PORT(
+		E1: IN STD_LOGIC;
+		E2: IN STD_LOGIC;
+		CLK: IN STD_LOGIC;
+		S: OUT STD_LOGIC -- NÃO TEM ;
+	);
+END PORTA_AND;
+
+ARCHITECTURE PORTA_AND_ARCH OF PORTA_AND IS
+SIGNAL AUX: STD_LOGIC;
+BEGIN
+	PROCESS(CLK, E1, E2)
+	BEGIN
+		IF (CLK'EVENT AND CLK = '1') THEN
+			AUX <= E1 AND E2;
+		END IF;
+	END PROCESS;
+	S <= AUX;
+END PORTA_AND_ARCH;
+"""
+
+"""
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY PORTA_AND IS
+	PORT(
+		E1: IN STD_LOGIC;_VECTOR(7 DOWNTO 0);
+		CLK: IN STD_LOGIC;
+		S: OUT STD_LOGIC _VECTOR(7 DOWNTO 0) -- NÃO TEM ;
+	);
+END PORTA_AND;
+
+ARCHITECTURE PORTA_AND_ARCH OF PORTA_AND IS
+SIGNAL AUX: STD_LOGIC_VECTOR(7 DOWNTO 0);
+BEGIN
+	PROCESS(CLK, E1)
+	BEGIN
+		IF (CLK'EVENT AND CLK = '1') THEN
+			AUX <= E1;
+		END IF;
+	END PROCESS;
+	S <= AUX;
+END PORTA_AND_ARCH;
+"""
+
+
+

@@ -1,0 +1,16 @@
+PROCESSADORES 21/02/2025
+
+=============================
+- DECISÕES
+	- CASE WHEN
+=============================
+
+-- CASE
+
+CASE ESTADO IS
+	WHEN ESTADO1 => OPERAÇÕES;
+	WHEN ESTADO2 => OPERAÇÕES;
+	WHEN OTHERS  => OPERAÇÕES OU NÃO;
+END CASE;
+
+-- 

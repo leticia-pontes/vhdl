@@ -1,0 +1,70 @@
+-- CIRCUITOS SÍNCRONOS E ASSÍNCRONOS
+
+- Circuitos assíncronos: colocar dentro da instrução BEGIN ("solta")
+
+- Circuitos síncronos: PROCESS
+A estrutura PROCESS fica observando uma variável:
+	PROCESS(clk) -- Observa a variável 'clk' (CLOCK)
+Dentro da estrutura, é possível adicionar uma condicional que verifica o estado da variável e executa uma instrução.
+
+? PROCESS detecta qualquer alteração na variável ou somente quando é nível alto?
+
+
+-- SINAIS E VARIÁVEIS
+
+- Variáveis: atribuição por ':=', no começo de uma subestrutura. São variáveis locais.
+
+- Sinais: atribuição por '<=', no começo da estrutura principal. São variáveis globais.
+
+-- CONDICIONAIS
+
+- IF THEN ELSE (termina com END IF;)
+- ELSE IF é ELSIF
+
+
+-- MULTIPLEXADOR (MUX)
+
+- Usa a biblioteca ieee (ieee.std_logic_1164.all).
+
+- Monitora o CLOCK e o RESET
+
+```
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY mux2x1 IS
+	PORT (
+		E1, E2: IN std_logic;
+		clk, rst, enable, sel: IN std_logic;
+		s: OUT std_logic
+	);
+END ENTITY mux2x1;
+
+ARCHITECTURE arch_mux OF mux2x1 IS
+BEGIN
+	PROCESS(clk, rst)
+	BEGIN
+		IF rst = '1' THEN
+			s <\= '0';
+		ELSIF clk'event AND clk = '1' THEN
+			IF enable = '1' THEN -- ON/OFF: estado do MUX
+				IF sel = '0' THEN
+					s <\= E1;
+				ELSE
+					s <\= E2;
+				END IF;
+			END IF;
+		END IF;
+	END PROCESS;
+END arch_mux;
+```
+
+-- REGISTRADOR DE 8 BITS
+
+- dout <\= (others => '0'); -- "00000000"
+
+
+
+
+
+
